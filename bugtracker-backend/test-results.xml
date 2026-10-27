@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="63">
+	<testsuite name="bugtracker-backend/internal/config" tests="0" failures="0" errors="0" id="0" hostname="rodtaira-Nitro-AN515-43" time="0.000" timestamp="2026-10-27T15:49:34-03:00"></testsuite>
+	<testsuite name="bugtracker-backend/internal/testutil" tests="0" failures="0" errors="0" id="1" hostname="rodtaira-Nitro-AN515-43" time="0.000" timestamp="2026-10-27T15:49:34-03:00"></testsuite>
+	<testsuite name="bugtracker-backend/cmd/bugtracker" tests="7" failures="0" errors="0" id="2" hostname="rodtaira-Nitro-AN515-43" time="0.200" timestamp="2026-10-27T15:49:34-03:00">
+		<testcase name="TestServerInitialization" classname="bugtracker-backend/cmd/bugtracker" time="0.100">
+			<system-out><![CDATA[[cors] 2026/10/27 14:25:24 Handler: Preflight request
+[cors] 2026/10/27 14:25:24   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:3000] Access-Control-Max-Age:[300] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]]]></system-out>
+		</testcase>
+		<testcase name="TestCORSConfiguration" classname="bugtracker-backend/cmd/bugtracker" time="0.100"></testcase>
+		<testcase name="TestCORSConfiguration/Valid_OPTIONS_request_from_allowed_origin" classname="bugtracker-backend/cmd/bugtracker" time="0.000">
+			<system-out><![CDATA[    main_test.go:170: Request: OPTIONS http://localhost:8081/api/health
+    main_test.go:171: Request Headers: map[Access-Control-Request-Method:[GET] Origin:[http://localhost:3000]]
+[cors] 2026/10/27 14:25:24 Handler: Preflight request
+[cors] 2026/10/27 14:25:24   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:3000] Access-Control-Max-Age:[300] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+    main_test.go:178: Response Status: 204
+    main_test.go:179: Response Headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:3000] Access-Control-Max-Age:[300] Date:[Tue, 27 Oct 2026 17:25:24 GMT] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+    main_test.go:186: Checking CORS headers:
+    main_test.go:187: Access-Control-Allow-Origin: http://localhost:3000
+    main_test.go:188: Access-Control-Allow-Methods: GET
+    main_test.go:189: Access-Control-Allow-Headers: ]]></system-out>
+		</testcase>
+		<testcase name="TestCORSConfiguration/OPTIONS_request_from_disallowed_origin" classname="bugtracker-backend/cmd/bugtracker" time="0.000">
+			<system-out><![CDATA[    main_test.go:170: Request: OPTIONS http://localhost:8081/api/health
+    main_test.go:171: Request Headers: map[Access-Control-Request-Method:[GET] Origin:[http://evil.com]]
+[cors] 2026/10/27 14:25:24 Handler: Preflight request
+[cors] 2026/10/27 14:25:24   Preflight aborted: origin 'http://evil.com' not allowed
+    main_test.go:178: Response Status: 204
+    main_test.go:179: Response Headers: map[Date:[Tue, 27 Oct 2026 17:25:24 GMT] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]]]></system-out>
+		</testcase>
+		<testcase name="TestCORSConfiguration/Valid_GET_request_from_allowed_origin" classname="bugtracker-backend/cmd/bugtracker" time="0.000">
+			<system-out><![CDATA[    main_test.go:170: Request: GET http://localhost:8081/api/health
+    main_test.go:171: Request Headers: map[Origin:[http://localhost:3000]]
+[cors] 2026/10/27 14:25:24 Handler: Actual request
+[cors] 2026/10/27 14:25:24   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:3000] Vary:[Origin]]
+2026/10/27 14:25:24 Health check request received from 127.0.0.1:60892
+2026/10/27 14:25:24 Sending health check response
+    main_test.go:178: Response Status: 200
+    main_test.go:179: Response Headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:3000] Content-Length:[34] Content-Type:[application/json] Date:[Tue, 27 Oct 2026 17:25:24 GMT] Vary:[Origin]]
+    main_test.go:186: Checking CORS headers:
+    main_test.go:187: Access-Control-Allow-Origin: http://localhost:3000
+    main_test.go:188: Access-Control-Allow-Methods: 
+    main_test.go:189: Access-Control-Allow-Headers: ]]></system-out>
+		</testcase>
+		<testcase name="TestCORSConfiguration/OPTIONS_request_with_invalid_method" classname="bugtracker-backend/cmd/bugtracker" time="0.000">
+			<system-out><![CDATA[    main_test.go:170: Request: OPTIONS http://localhost:8081/api/health
+    main_test.go:171: Request Headers: map[Access-Control-Request-Method:[INVALID] Origin:[http://localhost:3000]]
+[cors] 2026/10/27 14:25:24 Handler: Preflight request
+[cors] 2026/10/27 14:25:24   Preflight aborted: method 'INVALID' not allowed
+    main_test.go:178: Response Status: 204
+    main_test.go:179: Response Headers: map[Date:[Tue, 27 Oct 2026 17:25:24 GMT] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]]]></system-out>
+		</testcase>
+		<testcase name="TestCORSConfiguration/Request_with_credentials" classname="bugtracker-backend/cmd/bugtracker" time="0.000">
+			<system-out><![CDATA[    main_test.go:170: Request: GET http://localhost:8081/api/health
+    main_test.go:171: Request Headers: map[Cookie:[session=123] Origin:[http://localhost:3000]]
+[cors] 2026/10/27 14:25:24 Handler: Actual request
+[cors] 2026/10/27 14:25:24   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:3000] Vary:[Origin]]
+2026/10/27 14:25:24 Health check request received from 127.0.0.1:60898
+2026/10/27 14:25:24 Sending health check response
+    main_test.go:178: Response Status: 200
+    main_test.go:179: Response Headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:3000] Content-Length:[34] Content-Type:[application/json] Date:[Tue, 27 Oct 2026 17:25:24 GMT] Vary:[Origin]]
+    main_test.go:186: Checking CORS headers:
+    main_test.go:187: Access-Control-Allow-Origin: http://localhost:3000
+    main_test.go:188: Access-Control-Allow-Methods: 
+    main_test.go:189: Access-Control-Allow-Headers: ]]></system-out>
+		</testcase>
+	</testsuite>
+	<testsuite name="bugtracker-backend/internal/db" tests="12" failures="0" errors="0" id="3" hostname="rodtaira-Nitro-AN515-43" time="0.070" timestamp="2026-10-27T15:49:34-03:00">
+		<testcase name="TestCreateComment" classname="bugtracker-backend/internal/db" time="0.020">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestCreateComment/Valid_comment_creation" classname="bugtracker-backend/internal/db" time="0.000"></testcase>
+		<testcase name="TestCreateComment/Invalid_bug_ID" classname="bugtracker-backend/internal/db" time="0.000"></testcase>
+		<testcase name="TestCreateComment/Invalid_bug_ID_format" classname="bugtracker-backend/internal/db" time="0.000"></testcase>
+		<testcase name="TestGetComments" classname="bugtracker-backend/internal/db" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestGetComments/Get_existing_comments" classname="bugtracker-backend/internal/db" time="0.000"></testcase>
+		<testcase name="TestGetComments/Get_comments_for_non-existent_bug" classname="bugtracker-backend/internal/db" time="0.000"></testcase>
+		<testcase name="TestDatabaseInitialization" classname="bugtracker-backend/internal/db" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestMultipleInitializations" classname="bugtracker-backend/internal/db" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.
+2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestCleanup" classname="bugtracker-backend/internal/db" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestInitWithInvalidPath" classname="bugtracker-backend/internal/db" time="0.000"></testcase>
+		<testcase name="TestConcurrentInitializations" classname="bugtracker-backend/internal/db" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+	</testsuite>
+	<testsuite name="bugtracker-backend/internal/handlers" tests="27" failures="0" errors="0" id="4" hostname="rodtaira-Nitro-AN515-43" time="0.060" timestamp="2026-10-27T15:49:34-03:00">
+		<testcase name="TestCreateBug" classname="bugtracker-backend/internal/handlers" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestCreateBug/Valid_bug_creation" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 CreateBug called from 192.0.2.1:1234
+2026/10/27 14:25:24 Request headers: map[]
+2026/10/27 14:25:24 Request method: POST]]></system-out>
+		</testcase>
+		<testcase name="TestCreateBug/Invalid_bug_-_missing_title" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 CreateBug called from 192.0.2.1:1234
+2026/10/27 14:25:24 Request headers: map[]
+2026/10/27 14:25:24 Request method: POST]]></system-out>
+		</testcase>
+		<testcase name="TestCreateBug/Invalid_JSON" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 CreateBug called from 192.0.2.1:1234
+2026/10/27 14:25:24 Request headers: map[]
+2026/10/27 14:25:24 Request method: POST
+2026/10/27 14:25:24 Failed to decode create bug request: invalid character 'j' looking for beginning of value]]></system-out>
+		</testcase>
+		<testcase name="TestGetBug" classname="bugtracker-backend/internal/handlers" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestGetBug/Valid_bug_retrieval" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestGetBug/Non-existent_bug" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestGetBug/Invalid_bug_ID" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestUpdateBug" classname="bugtracker-backend/internal/handlers" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestUpdateBug/Valid_bug_update" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestUpdateBug/Non-existent_bug" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestUpdateBug/Invalid_bug_ID" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestUpdateBug/Invalid_JSON" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestDeleteBug" classname="bugtracker-backend/internal/handlers" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestDeleteBug/Valid_bug_deletion" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestDeleteBug/Non-existent_bug" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestDeleteBug/Invalid_bug_ID" classname="bugtracker-backend/internal/handlers" time="0.000"></testcase>
+		<testcase name="TestCreateComment" classname="bugtracker-backend/internal/handlers" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestCreateComment/Valid_comment_creation" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 Creating comment for bug 1]]></system-out>
+		</testcase>
+		<testcase name="TestCreateComment/Invalid_bug_ID" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 Creating comment for bug 999]]></system-out>
+		</testcase>
+		<testcase name="TestCreateComment/Missing_content" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 Creating comment for bug 1]]></system-out>
+		</testcase>
+		<testcase name="TestCreateComment/Invalid_JSON" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 Creating comment for bug 1]]></system-out>
+		</testcase>
+		<testcase name="TestGetComments" classname="bugtracker-backend/internal/handlers" time="0.010">
+			<system-out><![CDATA[2026/10/27 14:25:24 Database initialized successfully.]]></system-out>
+		</testcase>
+		<testcase name="TestGetComments/Get_existing_comments" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 Getting comments for bug 1]]></system-out>
+		</testcase>
+		<testcase name="TestGetComments/Get_comments_for_non-existent_bug" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 Getting comments for bug 999]]></system-out>
+		</testcase>
+		<testcase name="TestGetComments/Invalid_bug_ID" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 Getting comments for bug invalid]]></system-out>
+		</testcase>
+		<testcase name="TestHealthCheck" classname="bugtracker-backend/internal/handlers" time="0.000">
+			<system-out><![CDATA[2026/10/27 14:25:24 Health check request received from 
+2026/10/27 14:25:24 Sending health check response]]></system-out>
+		</testcase>
+	</testsuite>
+	<testsuite name="bugtracker-backend/internal/models" tests="17" failures="0" errors="0" id="5" hostname="rodtaira-Nitro-AN515-43" time="0.000" timestamp="2026-10-27T15:49:34-03:00">
+		<testcase name="TestBugValidation" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestBugValidation/Valid_bug" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestBugValidation/Missing_title" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestBugValidation/Invalid_priority" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestBugValidation/Invalid_status" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCreateBugRequest" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCreateBugRequest/Valid_request" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCreateBugRequest/Missing_title" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCommentValidation" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCommentValidation/Valid_comment" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCommentValidation/Missing_author" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCommentValidation/Missing_content" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCommentValidation/Missing_bug_ID" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCreateCommentRequest" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCreateCommentRequest/Valid_request" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCreateCommentRequest/Missing_author" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+		<testcase name="TestCreateCommentRequest/Missing_content" classname="bugtracker-backend/internal/models" time="0.000"></testcase>
+	</testsuite>
+</testsuites>
