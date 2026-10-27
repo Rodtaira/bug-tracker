@@ -24,7 +24,7 @@ pipeline {
                         mkdir -p reports 
                         mv coverage.html reports/
                     '''
-                    s
+                    
 
 
                 }
